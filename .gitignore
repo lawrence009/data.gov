@@ -1,0 +1,35 @@
+#############
+## R Studio
+#############
+.Rproj.user
+.RData
+.Rhistory
+*_cache
+*_files
+
+#############
+## QlikView
+#############
+*.qvd
+*.qvw
+Log.txt
+
+#############
+## Tableau
+#############
+*.tde
+
+#############
+## Specific to this project
+#############
+*.bak
+*.RData
+*.zip
+/*.html
+/*.pdf
+GADM*.rds
+1.SourceData/fdic.gov/**/*.csv
+1.SourceData/ncua.gov/**/*.txt
+4.DataProducts/**/*.csv
+images/
+temp/

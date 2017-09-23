@@ -1,0 +1,46 @@
+---
+title: "Explore NCUA 5300 Call Reports"
+output: html_notebook
+---
+
+
+5300 Call Report Account Descriptions
+
+https://www.ncua.gov/regulation-supervision/Pages/documents/call-report-account-descriptions-9302017.pdf
+
+
+build a vector of url to download from nuca.gov
+
+```{r}
+library(data.table)
+library(zoo)
+library(stringr)
+
+
+srcDataDir <- file.path(getwd(), '1.SourceData')
+ncuaDir <- file.path(srcDataDir, 'ncua.gov')
+
+x <- "QCR201503.zip"
+j <- seq(from = 12, by = -3, length.out =  4)
+j <- str_pad(j, 2, "left", "0")
+for(i in 2014:1994) {
+    x <- c(x, str_c("QCR", i, j, ".zip"))
+}
+
+str_c("https://www.ncua.gov/DataApps/Documents/", x)
+
+y <- str_c("Call-Report-Data-2017-",
+            str_pad(j[-1:-2], 2, "left", 0),
+            ".zip")
+
+y <- c(y, str_c("Call-Report-Data-2016-",
+                 str_pad(j, 2, "left", 0),
+                 ".zip"))
+
+y <- c(y, str_c("Call-Report-Data-2015-",
+                 str_pad(j[-4], 2, "left", 0),
+                 ".zip"))
+
+str_c("https://www.ncua.gov/analysis/Pages/call-report-data/reports/5300-call-report-data-files/", y)
+```
+
