@@ -62,16 +62,9 @@ for(url in y[bad]) {
 ```
 
 ```{r}
-x <- c(201706, 201703)
-j <- str_pad(seq(12, 3, -3), 2, "left", "0")
-for(i in 2016:1994) {
-    x <- c(x, str_c(i, j))
-}
-fns <- file.path(ncuaDir, x, "FOICU.txt")
+fns <- list.files(file.path(ncuaDir), "FOICU.txt", full.names = T, recursive = T, ignore.case = T)
 foicu <- ldply(fns, read.5300cr)
 setDT(foicu, key = "CU_NUMBER")
-foicu[, CYCLE_DATE := as.IDate(CYCLE_DATE, format = "%m/%d/%Y")]
-foicu[CYCLE_DATE < "1998-06-30", CYCLE_DATE := as.IDate(sub("^00", "19", CYCLE_DATE))]
 ```
 
 ```{r}
@@ -86,8 +79,6 @@ ggplot(data =  foicu[month(CYCLE_DATE) == 6, uniqueN(CU_NUMBER), keyby = CYCLE_D
 fns <- list.files(file.path(ncuaDir), "branch", full.names = T, recursive = T, ignore.case = T)
 foicu.b <- ldply(fns, read.5300cr)
 setDT(foicu.b, key = "CU_NUMBER")
-foicu.b[, CYCLE_DATE := as.IDate(CYCLE_DATE, format = "%m/%d/%Y")]
-foicu.b[CYCLE_DATE < "1998-06-30", CYCLE_DATE := as.IDate(sub("^00", "19", CYCLE_DATE))]
 ```
 ```{r}
 ggplot(data =  foicu.b[month(CYCLE_DATE) == 6, uniqueN(SiteId), keyby = CYCLE_DATE],

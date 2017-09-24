@@ -93,5 +93,7 @@ read.5300cr <- function(path) {
         
         x <- download.5300cr(url.zip)
     }
-    fread(path)
+    x <- fread(path, na.strings = c("", " "))
+    x[, CYCLE_DATE := as.IDate(CYCLE_DATE, format = "%m/%d/%Y")]
+    x[CYCLE_DATE < "1998-06-30", CYCLE_DATE := as.IDate(str_replace(CYCLE_DATE, "^00", "19"))]
 }
