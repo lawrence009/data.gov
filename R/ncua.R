@@ -52,28 +52,42 @@ download.5300cr <- function(url) {
 # FOICU.txt: CU identifers
 # FS*.txt: account tables
 
+url.5300cr <- function(x) {
+    # x: a Date object
+    # return the call report URL based reporting period x
+    
+    if(class(x) != "Date") stop("Date object required!")
+    if(!month(x) %in% seq(3, 12, 3)) stop("Month must be on of 3, 6, 9 or 12!")
+    if(x < "1994-03-31") stop("Call report data before 1994-03-31 unavaiable!")
+    
+    url1 <- "https://www.ncua.gov/DataApps/Documents/"
+    url2 <- "https://www.ncua.gov/analysis/Pages/call-report-data/reports/5300-call-report-data-files/"
+    
+    yy <- year(x)
+    mm <- str_pad(month(x), width = 2, "left", pad = "0")
+    if (x <= "2015-03-31") {
+        str_c(url1, "QCR",
+              yy, mm,
+              ".zip")
+    } else {
+        str_c(url2,
+              "Call-Report-Data-",
+              str_c(yy, mm, sep = "-"),
+              ".zip")
+    }
+}
+
 
 read.5300cr <- function(path) {
     if (!file.exists(file.path(path))) {
         x <- dirname(path)
-        y <- basename(x)
-        yy <- str_sub(y, 1, 4)
-        mm <- str_sub(y, 5, 6)
+        bn <- basename(x)
+        yy <- str_sub(bn, 1, 4)
+        mm <- str_sub(bn, 5, 6)
         ff <- as.Date(as.yearmon(str_c(yy, mm, sep = "-")), frac = 1)
         
-        url1 <- "https://www.ncua.gov/DataApps/Documents/"
-        url2 <- "https://www.ncua.gov/analysis/Pages/call-report-data/reports/5300-call-report-data-files/"
+        url.zip <- url.5300cr(ff)
         
-        if (ff <= "2015-03-31") {
-            url.zip <- str_c(url1, "QCR",
-                             yy, mm,
-                             ".zip")
-        } else {
-            url.zip <- str_c(url2,
-                             "Call-Report-Data-",
-                             str_c(yy, mm, sep = "-"),
-                             ".zip")
-        }
         x <- download.5300cr(url.zip)
     }
     fread(path)
