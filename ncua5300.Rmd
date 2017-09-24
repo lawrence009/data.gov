@@ -62,9 +62,9 @@ for(url in y[bad]) {
 ```
 
 ```{r}
-fns <- list.files(file.path(ncuaDir), "FOICU.txt", full.names = T, recursive = T, ignore.case = T)
+fns <- list.files(file.path(ncuaDir), "FOICU.txt$", full.names = T, recursive = T, ignore.case = T)
 foicu <- ldply(fns, read.5300cr)
-setDT(foicu, key = "CU_NUMBER")
+setDT(foicu, key = c("CU_NUMBER", "CYCLE_DATE"))
 ```
 
 ```{r}
@@ -92,3 +92,18 @@ ggplot(data =  foicu.b[month(CYCLE_DATE) == 6, uniqueN(SiteId) / uniqueN(CU_NUMB
     geom_line() +
     labs(title = "Average Number of Branches")
 ```
+
+```{r cache=TRUE}
+fns <- list.files(file.path(ncuaDir), "FS220.txt$", full.names = T, recursive = T, ignore.case = T)
+foicu.220 <- ldply(fns, read.5300cr)
+setDT(foicu.220, key = c("CU_NUMBER", "CYCLE_DATE"))
+```
+
+```{r}
+ggplot(data = foicu.220[month(CYCLE_DATE) == 6, mean(ACCT_010, na.rm = T) / 1e9, keyby = CYCLE_DATE],
+       aes(x = CYCLE_DATE, y = V1)) +
+    geom_line() +
+    labs(y = "$B",
+         title = "Average Assets")
+```
+
