@@ -39,13 +39,16 @@ download.5300cr <- function(url) {
         i <- str_length("Call-Report-Data-")
         yy <- str_sub(bn, i + 1, i + 4)
         mm <- str_sub(bn, i + 6, i + 7)
+    } else if(bn == "5300Data0613Final.zip") {
+        yy <- "2013"
+        mm <- "06"
     } else {
         i <- str_length("QCR")
         yy <- str_sub(bn, i + 1, i + 4)
         mm <- str_sub(bn, i + 5, i + 6)
     }    
     crdir <- file.path(ncuaDir, str_c(yy, mm))
-    unzip(qcr, exdir = crdir)
+    unzip(qcr, exdir = crdir, junkpaths = T)
 }
 
 # Acct_Des.txt and FOICUDES.txt: accounts and table descripters
@@ -92,8 +95,3 @@ read.5300cr <- function(path) {
     }
     fread(path)
 }
-
-fn <- file.path(ncuaDir, "201606", "FOICU.txt")
-DT1 <- read.5300cr(fn)
-fn <- file.path(ncuaDir, "201503", "FOICU.txt")
-DT2 <- read.5300cr(fn)

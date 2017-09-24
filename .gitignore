@@ -30,6 +30,7 @@ Log.txt
 GADM*.rds
 1.SourceData/fdic.gov/**/*.csv
 1.SourceData/ncua.gov/**/*.txt
+1.SourceData/ncua.gov/**/Account_Descriptions.xls
 4.DataProducts/**/*.csv
 images/
 temp/
