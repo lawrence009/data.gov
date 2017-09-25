@@ -1,0 +1,52 @@
+USPS,State,BEA_BureauEconomicAnalysis,CensusBureau_Region,CensusBureau_Name,CensusBureau_Division,CensusBureau_DivisionName
+CT,Connecticut,New England,1,Northeast,1,New England
+ME,Maine,New England,1,Northeast,1,New England
+MA,Massachusetts,New England,1,Northeast,1,New England
+NH,New Hampshire,New England,1,Northeast,1,New England
+RI,Rhode Island,New England,1,Northeast,1,New England
+VT,Vermont,New England,1,Northeast,1,New England
+NJ,New Jersey,Mideast,1,Northeast,2,Mid-Atlantic
+NY,New York,Mideast,1,Northeast,2,Mid-Atlantic
+PA,Pennsylvania,Mideast,1,Northeast,2,Mid-Atlantic
+IL,Illinois,Great Lakes,2,Midwest,3,East North Central
+IN,Indiana,Great Lakes,2,Midwest,3,East North Central
+MI,Michigan,Great Lakes,2,Midwest,3,East North Central
+OH,Ohio,Great Lakes,2,Midwest,3,East North Central
+WI,Wisconsin,Great Lakes,2,Midwest,3,East North Central
+IA,Iowa,Plains,2,Midwest,4,West North Central
+KS,Kansas,Plains,2,Midwest,4,West North Central
+MN,Minnesota,Plains,2,Midwest,4,West North Central
+MO,Missouri,Plains,2,Midwest,4,West North Central
+NE,Nebraska,Plains,2,Midwest,4,West North Central
+ND,North Dakota,Plains,2,Midwest,4,West North Central
+SD,South Dakota,Plains,2,Midwest,4,West North Central
+DE,Delaware,Mideast,3,South,5,South Atlantic
+DC,District of Columbia,Mideast,3,South,5,South Atlantic
+MD,Maryland,Mideast,3,South,5,South Atlantic
+FL,Florida,Southeast,3,South,5,South Atlantic
+GA,Georgia,Southeast,3,South,5,South Atlantic
+NC,North Carolina,Southeast,3,South,5,South Atlantic
+SC,South Carolina,Southeast,3,South,5,South Atlantic
+VA,Virginia,Southeast,3,South,5,South Atlantic
+WV,West Virginia,Southeast,3,South,5,South Atlantic
+AL,Alabama,Southeast,3,South,6,East South Centeral
+KY,Kentucky,Southeast,3,South,6,East South Centeral
+MS,Mississippi,Southeast,3,South,6,East South Centeral
+TN,Tennessee,Southeast,3,South,6,East South Centeral
+AR,Arkansas,Southeast,3,South,7,West South Central
+LA,Louisiana,Southeast,3,South,7,West South Central
+OK,Oklahoma,Southwest,3,South,7,West South Central
+TX,Texas,Southwest,3,South,7,West South Central
+AZ,Arizona,Southwest,4,West,8,Mountain
+NM,New Mexico,Southwest,4,West,8,Mountain
+CO,Colorado,Rocky Mountain,4,West,8,Mountain
+ID,Idaho,Rocky Mountain,4,West,8,Mountain
+MT,Montana,Rocky Mountain,4,West,8,Mountain
+UT,Utah,Rocky Mountain,4,West,8,Mountain
+WY,Wyoming,Rocky Mountain,4,West,8,Mountain
+NV,Nevada,Far West,4,West,8,Mountain
+AK,Alaska,Far West,4,West,9,Pacific
+CA,California,Far West,4,West,9,Pacific
+HI,Hawaii,Far West,4,West,9,Pacific
+OR,Oregon,Far West,4,West,9,Pacific
+WA,Washington,Far West,4,West,9,Pacific
