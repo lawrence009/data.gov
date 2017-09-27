@@ -61,6 +61,8 @@ for(url in y[bad]) {
 }
 
 # to-do: make sure the delete subdirectories LYNN which contain duplicate files
+# to-do: delete 200212 subdirectories
+# to-do: delete 199703 subdirectories
 ```
 
 ```{r}
@@ -114,5 +116,27 @@ ggplot(data = foicu.220[month(CYCLE_DATE) == 6, sum(ACCT_013, na.rm = T), keyby 
     geom_line(aes(x = CYCLE_DATE, y = V1 / 1e9))
 
 foicu.220[month(CYCLE_DATE) == 6, sum(ACCT_013, na.rm = T) / 1e9, keyby = CYCLE_DATE]
+```
+
+```{r}
+fns <- list.files(file.path(ncuaDir), "FS220B.txt$", full.names = T, recursive = T, ignore.case = T)
+bad <- grepl("199609", fns)
+foicu.220b <- ldply(fns[!bad], read.5300cr)
+setDT(foicu.220b, key = "CU_NUMBER")
+
+fns <- list.files(file.path(ncuaDir), "FS220C.txt$", full.names = T, recursive = T, ignore.case = T)
+foicu.220c <- ldply(fns, read.5300cr)
+setDT(foicu.220c, key = "CU_NUMBER")
+```
+
+```{r}
+# number of branches
+foicu.220b[, sum(ACCT_609, na.rm = T), keyby = CYCLE_DATE]
+foicu.220c[, sum(ACCT_566, na.rm = T), keyby = CYCLE_DATE]
+
+ggplot(data =  foicu.220c[month(CYCLE_DATE) == 6, sum(ACCT_566, na.rm = T), keyby = CYCLE_DATE][V1>0],
+       aes(x = CYCLE_DATE, y = V1)) +
+    geom_line() +
+    labs(title = "Number of Credit Unions Branches")
 ```
 

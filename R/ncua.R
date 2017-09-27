@@ -82,6 +82,7 @@ url.5300cr <- function(x) {
 
 
 read.5300cr <- function(path) {
+    # print(path)
     if (!file.exists(file.path(path))) {
         x <- dirname(path)
         bn <- basename(x)
