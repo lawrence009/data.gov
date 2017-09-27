@@ -23,8 +23,8 @@ library(data.table)
 library(zoo)
 library(stringr)
 
-srcDataDir <- file.path(getwd(), '1.SourceData')
-ncuaDir <- file.path(srcDataDir, 'ncua.gov')
+srcDataDir <- file.path(getwd(), "1.SourceData")
+ncuaDir <- file.path(srcDataDir, "ncua.gov")
 
 
 download.5300cr <- function(url) {
@@ -60,7 +60,7 @@ url.5300cr <- function(x) {
     # return the call report URL based reporting period x
     
     if(class(x) != "Date") stop("Date object required!")
-    if(!month(x) %in% seq(3, 12, 3)) stop("Month must be on of 3, 6, 9 or 12!")
+    if(!month(x) %in% seq(3, 12, 3)) stop("Month must be one of 3, 6, 9 or 12!")
     if(x < "1994-03-31") stop("Call report data before 1994-03-31 unavaiable!")
     
     url1 <- "https://www.ncua.gov/DataApps/Documents/"

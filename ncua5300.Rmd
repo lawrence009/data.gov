@@ -48,7 +48,7 @@ build a vector of call reports URLs and download from nuca.gov
 
 https://www.ncua.gov/regulation-supervision/Pages/documents/call-report-account-descriptions-9302017.pdf
 
-```{r message=FALSE}
+```{r download 5300, message=FALSE}
 x <- seq(as.Date("1994-4-1"), as.Date("2017-7-1"), by = "3 months") - 1
 y <- sapply(x, url.5300cr)
 

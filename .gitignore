@@ -29,6 +29,7 @@ Log.txt
 /*.pdf
 GADM*.rds
 1.SourceData/fdic.gov/**/*.csv
+1.SourceData/fdic.gov/sod/sod_variables_definitions.xls
 1.SourceData/ncua.gov/**/*.txt
 1.SourceData/ncua.gov/**/Account_Descriptions.xls
 4.DataProducts/**/*.csv

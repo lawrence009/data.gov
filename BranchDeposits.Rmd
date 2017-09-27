@@ -1,0 +1,76 @@
+---
+title: "Exploring US Branch Deposits (DRAFT)"
+author: "[Lawrence Chen](mailto:lawrence.chen@experian.com)"
+date: "`r format(Sys.Date(), '%B %e, %Y')`"
+output: html_notebook
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(knitr.kable.NA = '')
+```
+
+```{r setup, message=TRUE}
+library(data.table)
+library(stringr)
+library(readxl)
+library(ggplot2)
+library(tidyr)
+library(plyr)
+library(dplyr)
+library(knitr)
+library(pander)
+
+source("R/fdic.R")
+
+srcDataDir <- file.path(getwd(), "1.SourceData")
+sodDir <- file.path(srcDataDir, "fdic.gov", "sod")
+```
+
+This data is the result of the annual Summary of Deposits survey of branch office deposits as of June 30. Data is available back to 1994. Additional functionality including deposit market share reports and downloads are available at Summary of Deposits.
+
+```{r SOD download, message=FALSE}
+x <- sapply(1994:2016, url.sod)
+bad <- !file.exists(file.path(fdicDir, basename(x)))
+for(url in x[bad]) {
+    download.sod(url)
+}
+```
+
+```{r sod, warning=FALSE, cache=TRUE}
+fns <- list.files(sodDir, pattern = "ALL_[0-9]{4}\\.csv", full.names = T)
+sod <- ldply(fns, fread, data.table = F)
+j <- grep("^(ASSET|DEP)", colnames(sod))
+sod[, j] <- lapply(sod[, j], function(x) sub(",", "", x) %>% as.numeric)
+colnames(sod) <- str_to_lower(colnames(sod))
+setDT(sod)
+```
+
+
+Credit Unions are insured by NCUA, not by FDIC
+
+```{r}
+sod[, round(sum(depsumbr, na.rm = T) / 1e9, 4), keyby=year]
+
+sod[, round(sum(depsumbr, na.rm = T) / 1e9, 4), keyby=.(year, bkclass)] %>% 
+    dcast(bkclass~year, value.var = "V1") %>% 
+    arrange(desc(`2016`))
+```
+
+BKCLASS
+
+An alpha code that indicates major groupings of institutions based on insuring agent, entity type, charter agent, Federal Reserve membership status and country.
+
+Note: The BKCLASS value represents the institution’s class as of the survey date. 
+  
+N  = NATIONAL MEMBER BANKS  
+SM = STATE MEMBER BANKS  
+NM = STATE NONMEMBER BANKS  
+SI = STOCK AND MUTUAL SAVINGS BANKS  
+SB = SAVINGS BANKS AND SAVINGS AND LOANS  
+SL = STATE STOCK SAVINGS AND LOANS  
+SA = As of July 21, 2011, FDIC supervised state chartered thrifts and OCC supervised federally chartered thrifts. Prior to that date, state or federally chartered savings associations supervised by the Office of Thrift Supervision (OTS).  
+OI = OTHER INSURED INSTITUTIONS  
+NC = NONINSURED INSTITUTIONS  
+NS = NONINSURED SAVINGS INSTITUTIONS AND INSURANCE CO.  
+CU = CREDIT UNIONS  
