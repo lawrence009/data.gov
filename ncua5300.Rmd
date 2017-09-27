@@ -59,6 +59,8 @@ bad <- !file.exists(file.path(ncuaDir, basename(y)))
 for(url in y[bad]) {
     download.5300cr(url)
 }
+
+# to-do: make sure the delete subdirectories LYNN which contain duplicate files
 ```
 
 ```{r}
@@ -105,5 +107,12 @@ ggplot(data = foicu.220[month(CYCLE_DATE) == 6, mean(ACCT_010, na.rm = T) / 1e9,
     geom_line() +
     labs(y = "$B",
          title = "Average Assets")
+```
+
+```{r}
+ggplot(data = foicu.220[month(CYCLE_DATE) == 6, sum(ACCT_013, na.rm = T), keyby = CYCLE_DATE]) +
+    geom_line(aes(x = CYCLE_DATE, y = V1 / 1e9))
+
+foicu.220[month(CYCLE_DATE) == 6, sum(ACCT_013, na.rm = T) / 1e9, keyby = CYCLE_DATE]
 ```
 

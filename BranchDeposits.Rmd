@@ -94,3 +94,16 @@ What percentage of banks' deposits are held by community banks?
 sod[year == 2016, .(cmty = cert %in% cmty, depsumbr)][, .SD[cmty == T, sum(depsumbr, na.rm = T)] / sum(depsumbr, na.rm = T)]
 ```
 
+Community banks' share of deposits continue to grow
+
+```{r}
+ggplot(data = sod[, .(cmty = cert %in% cmty, depsumbr, year)][, .SD[cmty == T, sum(depsumbr, na.rm = T)] / sum(depsumbr, na.rm = T), by = year]) +
+    geom_line(aes(x = year, y = V1))
+```
+
+```{r}
+sod[cert %in% cmty, round(sum(depsumbr, na.rm = T) / 1e9, 4), keyby=.(year)] %>% 
+    dcast(.~year, value.var = "V1") %>% 
+    arrange(desc(`2016`))
+```
+
