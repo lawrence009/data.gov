@@ -22,6 +22,33 @@ srcDataDir <- file.path(getwd(), "1.SourceData")
 fdicDir <- file.path(srcDataDir, "fdic.gov")
 
 
+download.id <- function(force = F) {
+    # download current list of all institutions and their locations
+    # the list is updated weekely on fdic.gov
+    
+    fn <- file.path(fdicDir, 'INSTITUTIONS2.CSV')
+    if(!file.exists(fn) | force) {
+        temp <- tempfile()
+        download.file(url = "https://www5.fdic.gov/idasp/Institutions2.zip",
+                      destfile = temp,
+                      mode = "wb")
+        unzip(temp, exdir = fdicDir)
+        unlink(temp)
+    }
+    
+    fn <- file.path(fdicDir, 'OFFICES2_ALL.CSV')
+    if(!file.exists(fn) | force) {
+        temp <- tempfile()
+        download.file(url = "https://www5.fdic.gov/idasp/Offices2.zip",
+                      destfile = temp,
+                      mode = "wb")
+        unzip(temp, files = c("OFFICES2_ALL.CSV", "OFFICES2_DEFINITIONS.CSV"), exdir = fdicDir)
+        unlink(temp)
+    }
+}
+
+
+
 download.sod <- function(url) {
     # download Summary of Deposits from fdic.gov
     

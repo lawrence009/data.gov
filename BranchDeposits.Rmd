@@ -46,6 +46,12 @@ colnames(sod) <- str_to_lower(colnames(sod))
 setDT(sod)
 ```
 
+```{r fid}
+fid <- fread(file.path(fdicDir, "INSTITUTIONS2.CSV"))
+cmty <- fid[CB == 1, CERT]
+```
+
+
 
 Credit Unions are insured by NCUA, not by FDIC
 
@@ -74,3 +80,17 @@ OI = OTHER INSURED INSTITUTIONS
 NC = NONINSURED INSTITUTIONS  
 NS = NONINSURED SAVINGS INSTITUTIONS AND INSURANCE CO.  
 CU = CREDIT UNIONS  
+
+
+```{r}
+sod[cert %in% cmty, round(sum(depsumbr, na.rm = T) / 1e9, 4), keyby=.(year, bkclass)] %>% 
+    dcast(bkclass~year, value.var = "V1") %>% 
+    arrange(desc(`2016`))
+```
+
+What percentage of banks' deposits are held by community banks?
+
+```{r}
+sod[year == 2016, .(cmty = cert %in% cmty, depsumbr)][, .SD[cmty == T, sum(depsumbr, na.rm = T)] / sum(depsumbr, na.rm = T)]
+```
+
